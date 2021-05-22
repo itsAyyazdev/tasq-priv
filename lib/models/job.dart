@@ -3,16 +3,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Job {
   String reward;
   bool isActive;
-  Timestamp expiry;
+  String assignTo;
   String orgId, jobId;
   String description;
   Timestamp postedAt;
-
+  Timestamp expiry;
   String title;
-  String orgRef;
-  String orgName;
+  String category;
+  int rewardOfferId;
+  int categoryId;
 
-  int points;
+  String orgName;
 
   Job(
       {this.reward,
@@ -23,23 +24,26 @@ class Job {
       this.jobId,
       this.expiry,
       this.title,
-      this.orgRef,
       this.orgName,
-      this.points});
+      this.category,
+      this.categoryId,
+      this.assignTo,
+      this.rewardOfferId});
 
   Job.fromJson(dynamic json) {
     reward = json["reward"];
     isActive = json["is_active"];
     jobId = json["job_id"];
-
     orgId = json["org_id"];
     description = json["description"];
     postedAt = json["posted_at"];
     expiry = json["expiry"];
     title = json["title"];
-    orgRef = json["org_ref"];
     orgName = json["org_name"];
-    points = json["points"];
+    category = json["category"];
+    categoryId = json["category_id"];
+    assignTo = json["assignTo"];
+    rewardOfferId = json["rewardOffer_id"];
   }
 
   Map<String, dynamic> toJson() {
@@ -47,15 +51,17 @@ class Job {
     map["reward"] = reward;
     map["is_active"] = isActive;
     map["job_id"] = jobId;
-
     map["org_id"] = orgId;
     map["description"] = description;
     map["posted_at"] = postedAt;
     map["expiry"] = expiry;
     map["title"] = title;
-    map["org_ref"] = orgRef;
     map["org_name"] = orgName;
-    map["points"] = points;
+    map["category"] = category;
+    map["category_id"] = categoryId;
+    map["assignTo"] = assignTo;
+    map["rewardOffer_id"] = rewardOfferId;
+
     return map;
   }
 }
