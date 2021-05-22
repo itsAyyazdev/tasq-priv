@@ -1,10 +1,10 @@
-import 'package:tasq/models/post_model.dart';
+import 'package:tasq/models/job.dart';
 import 'package:tasq/ui/widgets/shared/timeago_widget.dart';
 import 'package:tasq/ui/widgets/user/points.dart';
 import 'package:tasq/utils/globals/import_hub.dart';
 
 class TaskWidget extends StatelessWidget {
-  final PostModel post;
+  final Job post;
   final bool showActive, showPoints, showResponses, showAssignedTo;
   final Color color;
   final Function onTap;
@@ -46,14 +46,14 @@ class TaskWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      post.postName,
+                      post.title,
                       style: MyTextStyles.montsBold16.copyWith(
                         fontSize: 16.0,
                         color: textColor,
                       ),
                     ),
                     TimeAgoWidget(
-                      time: post.createdAt,
+                      time: post.postedAt.toDate(),
                       textColor: textColor,
                     )
                   ],

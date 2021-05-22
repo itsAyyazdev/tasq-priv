@@ -1,11 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Job {
   String reward;
   bool isActive;
-  String expiryUnit;
+  Timestamp expiry;
   String orgId, jobId;
   String description;
-  String postedAt;
-  String expiry;
+  Timestamp postedAt;
+
   String title;
   String orgRef;
   String orgName;
@@ -15,7 +17,6 @@ class Job {
   Job(
       {this.reward,
       this.isActive,
-      this.expiryUnit,
       this.orgId,
       this.description,
       this.postedAt,
@@ -30,7 +31,7 @@ class Job {
     reward = json["reward"];
     isActive = json["is_active"];
     jobId = json["job_id"];
-    expiryUnit = json["expiry_unit"];
+
     orgId = json["org_id"];
     description = json["description"];
     postedAt = json["posted_at"];
@@ -46,7 +47,7 @@ class Job {
     map["reward"] = reward;
     map["is_active"] = isActive;
     map["job_id"] = jobId;
-    map["expiry_unit"] = expiryUnit;
+
     map["org_id"] = orgId;
     map["description"] = description;
     map["posted_at"] = postedAt;

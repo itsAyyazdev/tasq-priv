@@ -10,7 +10,8 @@ class AddNewActivity extends StatefulWidget {
 }
 
 class _AddNewActivityState extends State<AddNewActivity> {
-  String selectedCategory, dueIn, assignTo, reward;
+  String selectedCategory, dueIn, reward;
+  int assignTo;
   TextEditingController nameCont = TextEditingController();
   TextEditingController descriptionCont = TextEditingController();
   @override
@@ -54,7 +55,7 @@ class _AddNewActivityState extends State<AddNewActivity> {
                 hintText: "select whom to assign",
                 list: AppData.activityAssignTo, onChanged: (r) {
               setState(() {
-                assignTo = r;
+                assignTo = AppData.activityAssignTo.indexOf(r);
               });
             }),
             dropDown(3,
@@ -177,8 +178,8 @@ class _AddNewActivityState extends State<AddNewActivity> {
     PostModel pm = PostModel(
         postName: nameCont.text,
         points: "12",
-        companyId: "",
-        companyName: "YFS-Pak",
+        orgId: "",
+        orgName: "",
         assignTo: "",
         rewardOffer: reward,
         rewardOfferId: "",

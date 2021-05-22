@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tasq/models/job.dart';
 import 'package:tasq/ui/widgets/shared/task_card.dart';
 import 'package:tasq/utils/globals/app_data/dummy_data.dart';
 
@@ -17,7 +18,7 @@ class EndingSoon extends StatelessWidget {
     return Column(
       children: List.generate(listLength, (index) {
         return TaskWidget(
-          post: DummyData.posts[index],
+          post: Job(),
           showActive: true,
           showPoints: true,
           showResponses: false,

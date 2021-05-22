@@ -6,8 +6,8 @@ class PostModel {
       assignTo,
       rewardOffer,
       rewardOfferId,
-      companyName,
-      companyId,
+      orgName,
+      orgId,
       points;
   DateTime createdAt;
 
@@ -19,8 +19,8 @@ class PostModel {
       this.assignTo,
       this.rewardOffer,
       this.rewardOfferId,
-      this.companyName,
-      this.companyId,
+      this.orgName,
+      this.orgId,
       this.points,
       this.createdAt});
 }

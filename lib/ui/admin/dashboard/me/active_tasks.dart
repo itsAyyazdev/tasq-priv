@@ -1,3 +1,4 @@
+import 'package:tasq/models/job.dart';
 import 'package:tasq/models/job_application.dart';
 import 'package:tasq/ui/widgets/shared/empty_screen.dart';
 import 'package:tasq/ui/widgets/shared/shimmers/job.dart';
@@ -151,7 +152,7 @@ class ActiveTaskProfile extends StatelessWidget {
             showResponses: true,
             showActive: true,
             showAssignedTo: true,
-            post: DummyData.posts[index],
+            post: Job(),
           ),
         );
       }),
