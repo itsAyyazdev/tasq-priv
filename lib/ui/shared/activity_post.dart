@@ -16,7 +16,7 @@ class ActivityPost extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            'web developer\nreq.',
+            '${post.category}',
             style: MyTextStyles.montsNormal16.copyWith(
               fontSize: 32.0,
               color: Colors.black,

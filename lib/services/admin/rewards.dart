@@ -4,25 +4,18 @@ import 'package:tasq/utils/constants/firebase_collections.dart';
 import 'package:tasq/utils/globals/import_hub.dart';
 
 abstract class RewardsServices {
-  Future<List<RewardModel>> fetchAllRewards();
+  Future<Stream<List<RewardModel>>> fetchAllRewards();
   Future<void> postReward({RewardModel reward});
 }
 
 class RS implements RewardsServices {
   FirebaseFirestore db = FirebaseFirestore.instance;
   @override
-  Future<List<RewardModel>> fetchAllRewards() async {
-    CollectionReference ref = FBCollections.rewards;
-    Query query =
-        ref /*.where("org_id", isEqualTo: AppUser.organization.orgId)*/;
-    QuerySnapshot qs = await query.get();
-    List<RewardModel> rewards = [];
-    if (qs.docs.isNotEmpty) {
-      qs.docs.forEach((reward) {
-        rewards.add(RewardModel.fromJson(reward));
-      });
-    }
-    return Future.value(rewards);
+  Future<Stream<List<RewardModel>>> fetchAllRewards() async {
+    var ref = FBCollections.rewards.snapshots().asBroadcastStream();
+    var x = ref.map((event) =>
+        event.docs.map((e) => RewardModel.fromJson(e.data())).toList());
+    return x;
   }
 
   @override
