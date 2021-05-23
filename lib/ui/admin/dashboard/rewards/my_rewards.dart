@@ -1,23 +1,25 @@
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:tasq/models/reward_model.dart';
 import 'package:tasq/utils/globals/import_hub.dart';
 
 class MyRewards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.only(
-            top: 8.0, left: Get.width * 0.03, right: Get.width * 0.03),
-        child: Column(
-          children: List.generate(10, (index) {
-            return rewardWidget();
-          }),
-        ),
-      ),
-    );
+    return Consumer<AdminProvider>(
+        builder: (context, p, _) => SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.only(
+                    top: 8.0, left: Get.width * 0.03, right: Get.width * 0.03),
+                child: Column(
+                  children: List.generate(p?.rewardList?.length ?? 0, (index) {
+                    return rewardWidget(p.rewardList[index]);
+                  }),
+                ),
+              ),
+            ));
   }
 
-  Widget rewardWidget() {
+  Widget rewardWidget(RewardModel data) {
     return Padding(
       padding: EdgeInsets.only(
         top: 20.0,
@@ -55,7 +57,7 @@ class MyRewards extends StatelessWidget {
                         width: 24,
                       ),
                       Text(
-                        '₹500 Bocca Café \nVoucher',
+                        '${data.name}',
                         style: MyTextStyles.montsBold16.copyWith(
                           fontSize: 20.0,
                           color: Colors.white,
@@ -82,7 +84,7 @@ class MyRewards extends StatelessWidget {
                     color: Colors.white,
                   ),
                   child: Text(
-                    '456YFSIN',
+                    '${data.voucher}',
                     style: MyTextStyles.montsSemiBold16.copyWith(
                       fontSize: 13.0,
                       color: Colors.black,

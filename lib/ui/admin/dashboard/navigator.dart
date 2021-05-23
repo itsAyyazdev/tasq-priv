@@ -15,6 +15,15 @@ class _OrgDashboardState extends State<OrgDashboard> {
     Icons.settings,
   ];
   PageController _controller = PageController();
+
+  @override
+  void didChangeDependencies() {
+    Future.delayed(Duration(milliseconds: 200), () {
+      Provider.of<AdminProvider>(context, listen: false).onInit();
+    });
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<AppProvider>(

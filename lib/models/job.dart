@@ -4,31 +4,32 @@ class Job {
   String reward;
   bool isActive;
   String assignTo;
-  String orgId, jobId;
+  String orgId;
+  String jobId;
   String description;
   Timestamp postedAt;
   Timestamp expiry;
   String title;
   String category;
-  int rewardOfferId;
+  String rewardOfferId;
   int categoryId;
-
   String orgName;
 
-  Job(
-      {this.reward,
-      this.isActive,
-      this.orgId,
-      this.description,
-      this.postedAt,
-      this.jobId,
-      this.expiry,
-      this.title,
-      this.orgName,
-      this.category,
-      this.categoryId,
-      this.assignTo,
-      this.rewardOfferId});
+  Job({
+    this.reward,
+    this.isActive,
+    this.orgId,
+    this.description,
+    this.postedAt,
+    this.jobId,
+    this.expiry,
+    this.title,
+    this.orgName,
+    this.category,
+    this.categoryId,
+    this.assignTo,
+    this.rewardOfferId,
+  });
 
   Job.fromJson(dynamic json) {
     reward = json["reward"];

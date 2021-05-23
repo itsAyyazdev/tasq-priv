@@ -1,14 +1,22 @@
 import 'dart:ui';
 
+import 'package:tasq/models/job.dart';
 import 'package:tasq/models/post_model.dart';
 import 'package:tasq/ui/widgets/shared/timeago_widget.dart';
 import 'package:tasq/utils/globals/import_hub.dart';
 
 class ActivityPost extends StatelessWidget {
   final PostModel post;
+  final Job postData;
   final bool showHalf;
   final Widget addOnWidget;
-  ActivityPost({@required this.post, this.addOnWidget, this.showHalf = false});
+  final String dueIn;
+  ActivityPost(
+      {this.post,
+      this.addOnWidget,
+      this.showHalf = false,
+      this.postData,
+      this.dueIn});
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -16,7 +24,7 @@ class ActivityPost extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            '${post.category}',
+            '${postData.category}',
             style: MyTextStyles.montsNormal16.copyWith(
               fontSize: 32.0,
               color: Colors.black,
@@ -74,7 +82,7 @@ class ActivityPost extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
                             Text(
-                              post.rewardOffer,
+                              postData.reward,
                               style: MyTextStyles.montsSemiBold16.copyWith(
                                 fontSize: 14.0,
                                 color: Colors.black,
@@ -109,7 +117,7 @@ class ActivityPost extends StatelessWidget {
                       height: Get.height * 0.02,
                     ),
                     Text(
-                      "${post.dueDate}" + ' hours',
+                      "$dueIn" + ' hours',
                       style: MyTextStyles.montsNormal16.copyWith(
                         fontSize: 22.0,
                         color: const Color(0xFFFFA200),
@@ -123,9 +131,17 @@ class ActivityPost extends StatelessWidget {
     );
   }
 
+  // String showExpiryDate(Timestamp time) {
+  //   DateTime tempDate =
+  //       DateTime.fromMicrosecondsSinceEpoch(time.microsecondsSinceEpoch);
+  //   tempDate = DateFormat("MM/dd/yyyy hh:mm aaa").parse("$tempDate");
+  //   String timeString = tempDate.toString();
+  //   return timeString;
+  // }
+
   Widget description() {
     return Text(
-      '${post.description}',
+      '${postData.description}',
       style: MyTextStyles.montsNormal16.copyWith(
         fontSize: 18.0,
         color: Colors.black,

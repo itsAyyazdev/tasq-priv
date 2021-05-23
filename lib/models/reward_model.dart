@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class RewardModel {
   String name;
   String description;
@@ -7,7 +9,7 @@ class RewardModel {
   String rewardId;
   String orgId;
   bool isActive;
-  DateTime validTill;
+  Timestamp validTill;
 
   RewardModel(
       {this.name,
