@@ -1,3 +1,4 @@
+import 'package:tasq/models/job.dart';
 import 'package:tasq/models/post_model.dart';
 import 'package:tasq/ui/widgets/shared/task_card.dart';
 import 'package:tasq/utils/globals/app_data/app_data.dart';
@@ -212,7 +213,7 @@ class _UserProfileState extends State<UserProfile>
               children: List.generate(2, (index) {
                 PostModel p = DummyData.posts[index];
                 return TaskWidget(
-                  post: p,
+                  post: Job(),
                   showResponses: false,
                   showPoints: true,
                   showActive: true,
@@ -240,7 +241,7 @@ class _UserProfileState extends State<UserProfile>
               children: List.generate(2, (index) {
                 PostModel p = DummyData.posts[index];
                 return TaskWidget(
-                  post: p,
+                  post: Job(),
                   showResponses: false,
                   showPoints: true,
                   showActive: false,

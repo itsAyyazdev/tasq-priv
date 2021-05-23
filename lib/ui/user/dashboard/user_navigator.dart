@@ -1,4 +1,5 @@
 import 'package:tasq/ui/user/dashboard/rewards/my_rewards.dart';
+import 'package:tasq/utils/globals/app_data/app_user.dart';
 import 'package:tasq/utils/globals/import_hub.dart';
 
 class UserDashboard extends StatefulWidget {
@@ -48,6 +49,7 @@ class _UserDashboardState extends State<UserDashboard> {
   }
 
   Widget bottomBarItem(int index, AppProvider p) {
+    String namesFirstChar = AppUser.user?.name?.substring(0, 1) ?? "N";
     return Expanded(
       child: Container(
         child: InkWell(
@@ -59,7 +61,7 @@ class _UserDashboardState extends State<UserDashboard> {
                   ? CircleAvatar(
                       radius: 14,
                       backgroundColor: AppConfig.colors.smokeWhite,
-                      child: Text("Y"),
+                      child: Text("$namesFirstChar"),
                     )
                   : Icon(
                       bottomIcons[index],

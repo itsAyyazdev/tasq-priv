@@ -1,3 +1,4 @@
+import 'package:tasq/models/job.dart';
 import 'package:tasq/ui/admin/dashboard/me/my_postings/postDetails/detail_and_responses.dart';
 import 'package:tasq/ui/widgets/shared/task_card.dart';
 import 'package:tasq/utils/globals/app_data/dummy_data.dart';
@@ -16,7 +17,7 @@ class MyPostings extends StatelessWidget {
             showPoints: true,
             showResponses: true,
             showActive: true,
-            post: DummyData.posts[index],
+            post: Job(reward: "lsdhfk"),
           ),
         );
       }),

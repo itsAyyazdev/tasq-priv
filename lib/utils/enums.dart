@@ -2,6 +2,7 @@ class Enums {
   static Role role = Role();
   static TaskStatus taskStatus = TaskStatus();
   static TaskApplication taskApplication = TaskApplication();
+  static TaskAssign task = TaskAssign();
 }
 
 class Role {
@@ -14,4 +15,8 @@ class TaskStatus {
 
 class TaskApplication {
   int applied = 0, acceptedAndAssigned = 1, rejected = 2;
+}
+
+class TaskAssign {
+  int team = 0, organization = 1, everyOne = 2;
 }

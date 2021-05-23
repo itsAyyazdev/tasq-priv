@@ -15,11 +15,11 @@ class MyButton extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
       child: Padding(
         padding:
-            EdgeInsets.symmetric(vertical: 14.0, horizontal: Get.width * 0.1),
+            EdgeInsets.symmetric(vertical: 13.0, horizontal: Get.width * 0.04),
         child: Text(
           title,
           style: MyTextStyles.montsSemiBold16
-              .copyWith(color: Colors.white, fontSize: 18),
+              .copyWith(color: Colors.white, fontSize: 17),
         ),
       ),
     );

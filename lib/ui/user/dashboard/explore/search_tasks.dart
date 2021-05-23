@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tasq/models/job.dart';
 import 'package:tasq/ui/user/task/task_details.dart';
 import 'package:tasq/ui/widgets/shared/task_card.dart';
 import 'package:tasq/utils/constants/config.dart';
@@ -41,7 +42,7 @@ class SearchTasks extends StatelessWidget {
                   return Container(
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     child: TaskWidget(
-                      post: DummyData.posts[index],
+                      post: Job(),
                       showActive: true,
                       showPoints: true,
                       showResponses: false,
