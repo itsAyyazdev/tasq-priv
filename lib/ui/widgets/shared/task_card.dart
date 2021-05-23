@@ -172,7 +172,7 @@ class TaskWidget extends StatelessWidget {
     return PointsWidget(
       size: 12,
       textColor: textColor,
-      value: "${post.points}",
+      value: "123",
       bgColor: Colors.transparent,
     );
   }
