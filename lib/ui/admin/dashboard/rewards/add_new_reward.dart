@@ -1,10 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:tasq/models/reward_model.dart';
 import 'package:tasq/ui/widgets/admin/my_text_field.dart';
 import 'package:tasq/ui/widgets/shared/k_button.dart';
 import 'package:tasq/ui/widgets/shared/my_app_bar.dart';
+import 'package:tasq/utils/globals/app_data/app_user.dart';
 import 'package:tasq/utils/globals/import_hub.dart';
 
 // ignore: must_be_immutable
@@ -25,66 +28,72 @@ class AddNewReward extends StatelessWidget {
                 showChatIcon: false,
                 // trailing: Container(),
               ),
-              body: Padding(
-                padding: EdgeInsets.all(Get.width * 0.04),
-                child: Column(
-                  children: [
-                    MyTextField(
-                      controller: rewardNameCont,
-                      title: "reward name",
-                    ),
-                    MyTextField(
-                      controller: descriptionCont,
-                      maxLines: null,
-                      title: "description",
-                    ),
-                    MyTextField(
-                      controller: voucherCont,
-                      title: "voucher code",
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.02,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+              body: ModalProgressHUD(
+                inAsyncCall: p.isLoading,
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.all(Get.width * 0.04),
+                    child: Column(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 16, bottom: 12),
-                          child: Text(
-                            "valid till",
-                            style: MyTextStyles.montsSemiBold16
-                                .copyWith(fontSize: 16),
-                          ),
+                        MyTextField(
+                          controller: rewardNameCont,
+                          title: "reward name",
                         ),
-                        GestureDetector(
-                          onTap: () => pickExpiry(p),
-                          child: TextFormField(
-                            controller: dateCont,
-                            enabled: false,
-                            decoration: InputDecoration(
-                                hintText: "$pickedDateString",
-                                hintStyle: MyTextStyles.montsSemiBold16
-                                    .copyWith(
-                                        color: Colors.black, fontSize: 16),
-                                disabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: AppConfig.colors.themeBlue)),
-                                suffixIcon: IconButton(
-                                  icon: Icon(Icons.calendar_today_outlined),
-                                  onPressed: () {},
-                                )),
+                        MyTextField(
+                          controller: descriptionCont,
+                          maxLines: null,
+                          title: "description",
+                        ),
+                        MyTextField(
+                          controller: voucherCont,
+                          title: "voucher code",
+                        ),
+                        SizedBox(
+                          height: Get.height * 0.02,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 16, bottom: 12),
+                              child: Text(
+                                "valid till",
+                                style: MyTextStyles.montsSemiBold16
+                                    .copyWith(fontSize: 16),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () => pickExpiry(p),
+                              child: TextFormField(
+                                controller: dateCont,
+                                enabled: false,
+                                decoration: InputDecoration(
+                                    hintText: "$pickedDateString",
+                                    hintStyle: MyTextStyles.montsSemiBold16
+                                        .copyWith(
+                                            color: Colors.black, fontSize: 16),
+                                    disabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: AppConfig.colors.themeBlue)),
+                                    suffixIcon: IconButton(
+                                      icon: Icon(Icons.calendar_today_outlined),
+                                      onPressed: () {},
+                                    )),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: Get.height * 0.1),
+                          child: MyButton(
+                            title: "ADD TO REWARDS",
+                            onTap: () => addToRewards(p),
                           ),
                         ),
                       ],
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(top: Get.height * 0.1),
-                      child: MyButton(
-                        title: "ADD TO REWARDS",
-                        onTap: () => addToRewards(p),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ));
@@ -107,13 +116,16 @@ class AddNewReward extends StatelessWidget {
 
   void addToRewards(AdminProvider p) async {
     RewardModel model = RewardModel(
-        name: rewardNameCont.text,
-        description: descriptionCont.text,
-        voucher: voucherCont.text,
-        validTill: pickedDate,
-        orgId: "",
-        companyLogo: "",
-        companyName: "");
+      name: rewardNameCont.text,
+      description: descriptionCont.text,
+      voucher: voucherCont.text,
+      validTill: Timestamp.fromDate(pickedDate),
+      orgId: AppUser.organization.orgId,
+      companyLogo: AppUser.organization.logo,
+      companyName: AppUser.organization.name,
+      isActive: true,
+      rewardId: Timestamp.now().millisecondsSinceEpoch.toString(),
+    );
     p.addReward(model);
   }
 }

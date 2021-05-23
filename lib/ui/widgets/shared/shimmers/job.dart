@@ -4,13 +4,16 @@ import 'package:tasq/utils/globals/import_hub.dart';
 class JobShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        itemBuilder: (context, index) => Shimmer.fromColors(
-              child: jobCard(),
-              enabled: true,
-              baseColor: Colors.grey[300],
-              highlightColor: Colors.grey[100],
-            ));
+    return Container(
+      height: Get.height,
+      child: ListView.builder(
+          itemBuilder: (context, index) => Shimmer.fromColors(
+                child: jobCard(),
+                enabled: true,
+                baseColor: Colors.grey[300],
+                highlightColor: Colors.grey[100],
+              )),
+    );
   }
 
   jobCard() {

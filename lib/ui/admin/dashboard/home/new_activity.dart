@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:tasq/models/job.dart';
 import 'package:tasq/models/reward_model.dart';
 import 'package:tasq/ui/widgets/admin/my_text_field.dart';
@@ -13,18 +14,10 @@ class AddNewActivity extends StatefulWidget {
 }
 
 class _AddNewActivityState extends State<AddNewActivity> {
-  String selectedCategory, dueIn, assignTo, reward;
+  String selectedCategory, dueIn, assignTo;
   RewardModel rewards;
   TextEditingController nameCont = TextEditingController();
   TextEditingController descriptionCont = TextEditingController();
-
-  @override
-  void didChangeDependencies() {
-    Future.delayed(Duration(milliseconds: 200), () {
-      Provider.of<AdminProvider>(context, listen: false).getRewards();
-    });
-    super.didChangeDependencies();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,108 +29,111 @@ class _AddNewActivityState extends State<AddNewActivity> {
                 showChatIcon: false,
                 // trailing: Container(),
               ),
-              body: Padding(
-                padding: EdgeInsets.all(Get.width * 0.04),
-                child: ListView(
-                  // crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    MyTextField(
-                      title: "tasQ name",
-                      controller: nameCont,
-                    ),
-                    MyTextField(
-                      title: "description",
-                      controller: descriptionCont,
-                    ),
-                    dropDown(0,
-                        title: "category",
-                        hintText: "select category",
-                        list: AppData.activityCategories, onChanged: (r) {
-                      setState(() {
-                        selectedCategory = r;
-                      });
-                    }),
-                    dropDown(0,
-                        title: "activity due in",
-                        hintText: "select due days",
-                        list: AppData.activityDueCount, onChanged: (r) {
-                      setState(() {
-                        dueIn = r;
-                      });
-                    }),
-                    dropDown(0,
-                        title: "assign to",
-                        hintText: "select whom to assign",
-                        list: AppData.activityAssignTo, onChanged: (r) {
-                      setState(() {
-                        assignTo = r;
-                      });
-                    }),
-                    dropDownReward(3,
-                        title: "rewards offered",
-                        hintText: "select reward",
-                        list: adminProvider.rewardList, onChanged: (r) {
-                      setState(() {
-                        rewards = r;
-                      });
-                    }),
-                    reward == null
-                        ? Container()
-                        : Padding(
-                            padding: EdgeInsets.fromLTRB(
-                                0, Get.height * 0.03, Get.width * 0.26, 10),
-                            child: Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 14, vertical: 6),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(40.0),
-                                border: Border.all(
-                                  width: 1.0,
-                                  color: const Color(0xFFDC143D),
+              body: ModalProgressHUD(
+                inAsyncCall: adminProvider.isLoading,
+                child: Padding(
+                  padding: EdgeInsets.all(Get.width * 0.04),
+                  child: ListView(
+                    // crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      MyTextField(
+                        title: "tasQ name",
+                        controller: nameCont,
+                      ),
+                      MyTextField(
+                        title: "description",
+                        controller: descriptionCont,
+                      ),
+                      dropDown(0,
+                          title: "category",
+                          hintText: "select category",
+                          list: AppData.activityCategories, onChanged: (r) {
+                        setState(() {
+                          selectedCategory = r;
+                        });
+                      }),
+                      dropDown(0,
+                          title: "activity due in",
+                          hintText: "select due days",
+                          list: AppData.activityDueCount, onChanged: (r) {
+                        setState(() {
+                          dueIn = r;
+                        });
+                      }),
+                      dropDown(0,
+                          title: "assign to",
+                          hintText: "select whom to assign",
+                          list: AppData.activityAssignTo, onChanged: (r) {
+                        setState(() {
+                          assignTo = r;
+                        });
+                      }),
+                      dropDownReward(3,
+                          title: "rewards offered",
+                          hintText: "select reward",
+                          list: adminProvider.rewardList, onChanged: (r) {
+                        setState(() {
+                          rewards = r;
+                        });
+                      }),
+                      rewards == null
+                          ? Container()
+                          : Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                  0, Get.height * 0.03, Get.width * 0.26, 10),
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 14, vertical: 6),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(40.0),
+                                  border: Border.all(
+                                    width: 1.0,
+                                    color: const Color(0xFFDC143D),
+                                  ),
                                 ),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Expanded(
-                                    child: Text(
-                                      '$reward',
-                                      style:
-                                          MyTextStyles.montsSemiBold16.copyWith(
-                                        fontSize: 14.0,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w600,
-                                        height: 1.56,
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Text(
+                                        '${rewards.name}',
+                                        style: MyTextStyles.montsSemiBold16
+                                            .copyWith(
+                                          fontSize: 14.0,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w600,
+                                          height: 1.56,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  IconButton(
-                                    visualDensity: VisualDensity.compact,
-                                    icon: Icon(Icons.remove_circle_outline),
-                                    onPressed: () {
-                                      setState(() {
-                                        reward = null;
-                                      });
-                                    },
-                                  ),
-                                ],
+                                    IconButton(
+                                      visualDensity: VisualDensity.compact,
+                                      icon: Icon(Icons.remove_circle_outline),
+                                      onPressed: () {
+                                        setState(() {
+                                          rewards = null;
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          top: Get.height * 0.1,
-                          left: Get.width * 0.1,
-                          right: Get.width * 0.1),
-                      child: MyButton(
-                        title: "SEE POST PREVIEW",
-                        onTap: onPreviewTapped,
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: Get.height * 0.1,
+                            left: Get.width * 0.1,
+                            right: Get.width * 0.1),
+                        child: MyButton(
+                          title: "SEE POST PREVIEW",
+                          onTap: onPreviewTapped,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 64,
-                    ),
-                  ],
+                      SizedBox(
+                        height: 64,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ));
@@ -228,7 +224,7 @@ class _AddNewActivityState extends State<AddNewActivity> {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                value: list[index].name,
+                value: list[index],
               );
             }),
             onChanged: onChanged,
@@ -242,20 +238,25 @@ class _AddNewActivityState extends State<AddNewActivity> {
   onPreviewTapped() {
     Job pm = Job(
       title: nameCont.text,
-      jobId: Timestamp.now().millisecondsSinceEpoch.toString(),
       postedAt: Timestamp.now(),
       expiry: expiry(dueIn),
       isActive: true,
-      reward: reward,
+      reward: rewards.name,
       orgId: AppUser.organization.orgId,
       orgName: AppUser.organization.name,
       description: descriptionCont.text,
       assignTo: "",
-      rewardOfferId: 0,
+      rewardOfferId: rewards.rewardId,
       category: selectedCategory,
       categoryId: 0,
     );
-    // AppRoutes.push(context, PostPreview(post: pm));
+    print(pm.toJson());
+    AppRoutes.push(
+        context,
+        PostPreview(
+          postData: pm,
+          dueIn: dueIn,
+        ));
   }
 
   Timestamp expiry(String duration) {

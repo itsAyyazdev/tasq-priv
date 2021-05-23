@@ -43,6 +43,7 @@ dependencies:
   google_sign_in: ^5.0.3
   circular_profile_avatar:
   shimmer: ^2.0.0
+  modal_progress_hud_nsn: ^0.1.0-nullsafety-1
 
 #Firebase-packages
   firebase_auth: ^1.2.0
